@@ -1,0 +1,244 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    color: white;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(0, 0, 0);
+    font-family: monospace;
+    height: 1000px;
+}
+
+.container {
+    max-width: 1200px;
+    width: 1200px;
+}
+
+/* Awal Style Navbar */
+.navbar {
+    position: fixed;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+}
+
+.navbar img {
+    width: 100px;
+    margin-left: 5.5%;
+}
+
+.navbar .nav {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    width: 30%;
+    right: 37.5%;
+    opacity: 0;
+}
+
+.navbar .nav li {
+    margin-bottom: 1px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.navbar .nav li:hover {
+    border-bottom: 1px solid red;
+}
+
+
+.navbar .hamburger::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    width: 30px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.863);
+}
+
+.navbar .hamburger {
+    position: absolute;
+    width: 30px;
+    height: 5px;
+    background-color: rgb(255, 255, 255);
+}
+
+.navbar .hamburger::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    width: 30px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.863);
+}
+
+.check {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    transition: .7s;
+    width: 30px;
+    height: 23px;
+    right: 5%;
+    background-color: rgba(255, 1, 1, 0);
+    z-index: 11;
+}
+
+.user {
+    display: none;
+    margin-right: 10%;
+    animation: animasi2 2s;
+    opacity: 0;
+}
+
+.user span {
+    cursor: pointer;
+    position: relative;
+    padding: 5px;
+    border-radius: 15px;
+}
+
+.user span:hover {
+    background-color: white;
+    color: black;
+}
+
+.user .unik {
+    margin-left: 7px;
+    padding-left: 22px;
+    padding-right: 5px;
+    background-color: rgb(255, 0, 0);
+}
+
+.user .unik:hover {
+    background-color: red;
+}
+
+.user .unik img {
+    position: absolute;
+    width: 15px;
+    left: 0px;
+}
+
+@keyframes animasi1 {
+    from {
+        right: 0%;
+        opacity: 0;
+    }
+
+    to {
+        right: 37.5%;
+        opacity: 1;
+    }
+}
+
+@keyframes animasi2 {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Akhir Style Navbar */
+
+.jumbotron {
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+    margin-top: 100px;
+}
+
+.jumbotron .img {
+    position: relative;
+    width: 50%;
+    height: 550px;
+}
+
+.jumbotron .img img {
+    position: absolute;
+    right: -188px;
+    top: 40px;
+    width: 1000px;
+}
+
+.jumbotron .img img.jumbo2 {
+    position: absolute;
+    right: -170px;
+    top: 0px;
+    opacity: .1;
+}
+
+.jumbotron .jumboText {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 50%;
+}
+
+.jumbotron .jumboText h1 {
+    position: absolute;
+    font-size: 60px;
+    top: 110px;
+}
+
+.jumbotron .jumboText p {
+    position: absolute;
+    font-size: 16px;
+    top: 200px;
+}
+
+
+.jumbotron .jumboText .continue {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    left: 7.5%;
+    top: 340px;
+}
+
+.jumbotron .jumboText .continue p {
+    position: absolute;
+    font-size: 16px;
+    top: -30px;
+}
+
+.jumbotron .jumboText .continue span {
+    background-color: rgb(255, 0, 0);
+    padding: 5px;
+    border-radius: 15px;
+    transition: .5s;
+}
+
+.jumbotron .jumboText .continue span img {
+    width: 20px;
+    margin-bottom: -4.5px;
+}
+
+.jumbotron .jumboText .continue span.fb {
+    background-color: blue;
+}
+
+.jumbotron .jumboText .continue span.garus {
+    background-color: rgba(0, 0, 0, 0);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.jumbotron .jumboText .continue .sosmed:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+}
