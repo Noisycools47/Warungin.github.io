@@ -2,6 +2,7 @@
 const check = document.querySelector('.check');
 const navigasi = document.querySelector('.nav');
 const user = document.querySelector('.user');
+const navbar = document.querySelector('.navbar');
 navigasi.style.display = 'none';
 
 check.addEventListener('click', ()=> {
@@ -14,6 +15,7 @@ check.addEventListener('click', ()=> {
         user.style.display = 'flex';
         navigasi.style.opacity = '1';
         user.style.opacity = '1';
+        navbar.style.backdropFilter = 'blur(10px)';
         setTimeout(()=> {
             navigasi.style.animation = '';
             user.style.animation = '';
@@ -24,6 +26,7 @@ check.addEventListener('click', ()=> {
         user.style.animation = 'animasi2 .2s reverse';
         navigasi.style.opacity = '0';
         user.style.opacity = '0';
+        navbar.style.backdropFilter = '';
         setTimeout(()=> {
             user.style.display = 'none';
             navigasi.style.display = 'none';
@@ -33,3 +36,17 @@ check.addEventListener('click', ()=> {
 });
 
 // Akhir Navbar
+
+//Error Mobile (sementara)
+
+function mobile(x) {
+    if(x.matches) {
+        document.createElement
+    }else {
+        
+    }
+}
+
+const x = window.matchMedia("(max-width: 600px)");
+mobile(x)
+x.addListener(mobile)
