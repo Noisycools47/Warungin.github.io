@@ -412,8 +412,8 @@ footer ul li a {
 }
 
 .log {
-    width: 450px;
-    height: 610px;
+    width: 460px;
+    height: 630px;
     border: 2px solid black;
     position: absolute;
     right: 20px;
@@ -507,6 +507,7 @@ footer ul li a {
 }
 
 .ft {
+    text-align: center;
     cursor: pointer;
 }
 

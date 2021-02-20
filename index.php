@@ -1,3 +1,9 @@
+<?php
+
+session_start();
+
+?>
+
 <!DOCTYPE html>
 <html lang="ind">
 <head>
@@ -19,8 +25,8 @@
             <li>WarungKu</li>
         </ul>
         <div class="user">
-            <span><a class="a" href="login.html">Login</a></span>
-            <span class="unik"><a class="unk" href="daftar.html"><img src="img/new.png" alt="">Sign Up</a></span>
+            <span><a class="a" href="login.php">Login</a></span>
+            <span class="unik"><a class="unk" href="daftar.php"><img src="img/new.png" alt="">Sign Up</a></span>
         </div>
         <span class="check">
             <div class="hamburger"></div>
