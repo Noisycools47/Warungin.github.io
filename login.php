@@ -17,7 +17,7 @@
             <input class="inputLog" type="text" name="password" placeholder="Password">
             <input class="checkbox" type="checkbox" name="remember">
             Remember Me
-            <button class="btn" type="submit">Login</button>
+            <button class="btn" type="submit" name="save">Login</button>
             <div class="strip"></div>
             <div class="btn goog"><img class ="google" src="img/google.png" alt="">Login With Google</div>
             <div class="btn fb"><img class="facebook" src="img/fb.png" alt="">Login With Facebook</div>

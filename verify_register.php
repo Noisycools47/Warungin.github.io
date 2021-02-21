@@ -23,4 +23,11 @@ if ($num_of_rows == 1){
 }
 
 
+// password not match
+if ($_POST['password'] !== $_POST['repeat']){
+    // pesan : password harus sama
+    //die('password harus sama');
+}
+
+
 ?>
