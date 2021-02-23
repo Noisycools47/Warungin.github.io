@@ -14,7 +14,7 @@
             <form action="verify_login.php" method="POST">
             <img class="warungin" src="img/WarungIn.png" alt="">
             <input class="inputLog" type="text" name="user" placeholder="Username">
-            <input class="inputLog" type="text" name="password" placeholder="Password">
+            <input class="inputLog" type="password" name="password" placeholder="Password">
             <input class="checkbox" type="checkbox" name="remember">
             Remember Me
             <button class="btn" type="submit" name="save">Login</button>

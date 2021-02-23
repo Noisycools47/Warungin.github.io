@@ -12,16 +12,20 @@ $num = mysqli_num_rows($result);
 
 $tabel_user = mysqli_fetch_assoc($query);
 
-if ($num > 0){
-    header("location:index.php");
+if (empty($_POST['user'])) {
+    header("location:login.php?error=Username Masih Kosong!");
+} else if (empty($_POST['password'])){
+    header("location:login.php?error=Password Masih Kosong!");
 } else {
-    header("location:login.php");
+    //$password = md5($password);
+    if ($num > 0){
+        $_SESSION['user'] = $row['nama'];
+        $_SESSION['email'] = $row['email'];
+        header("Location:index.php");
+        exit();
+    } else {
+        header("location:login.php?error=Username atau Password Salah!");
+    }
 }
 
-if (empty($_POST['user']) ||
-    empty($_POST['password'])
-    ) {
-        // pesan : isi data dulu
-        //die('isi kolom dulu');
-    }
 ?>
