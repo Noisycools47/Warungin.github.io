@@ -20,9 +20,14 @@ if (empty($_POST['user'])) {
     //$password = md5($password);
     if ($num > 0){
         $_SESSION['user'] = $row['nama'];
-        $_SESSION['email'] = $row['email'];
-        header("Location:index.php");
-        exit();
+        $_SESSION['user'] = $name;
+        if (isset($_SESSION['user'])){
+            header("Location:homepage.php");
+            exit();
+        } else {
+            header("Location:login.php");
+            exit();
+        }
     } else {
         header("location:login.php?error=Username atau Password Salah!");
     }
