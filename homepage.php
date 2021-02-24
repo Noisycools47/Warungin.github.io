@@ -1,4 +1,13 @@
-<?php session_start() ?>
+<!-- ==================== -->
+<?php 
+
+session_start();
+if (!isset($_SESSION['user'])){
+    header("Location: login.php");
+}
+
+?>
+<!-- ==================== -->
 
 <!DOCTYPE html>
 <html lang="ind">
@@ -21,7 +30,9 @@
             <li>WarungKu</li>
         </ul>
         <div class="user">
+            <!-- ==================== -->
             <span><a class="a" href="logout.php">Logout</a></span>
+            <!-- ==================== -->
         </div>
         <span class="check">
             <div class="hamburger"></div>

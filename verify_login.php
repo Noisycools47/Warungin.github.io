@@ -1,3 +1,9 @@
+
+<!-- ALERTIFY JS LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js" integrity="sha512-JnjG+Wt53GspUQXQhc+c4j8SBERsgJAoHeehagKHlxQN+MtCCmFDghX9/AcbkkNRZptyZU4zC8utK59M5L45Iw==" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.min.css" integrity="sha512-IXuoq1aFd2wXs4NqGskwX2Vb+I8UJ+tGJEu/Dc0zwLNKeQ7CW3Sr6v0yU3z5OQWe3eScVIkER4J9L7byrgR/fA==" crossorigin="anonymous" />
+<!-- ^ALERTIFY JS LIBRARY^ -->
+
 <?php 
 
 session_start();
@@ -21,8 +27,19 @@ if (empty($_POST['user'])) {
     if ($num > 0){
         $_SESSION['user'] = $row['nama'];
         $_SESSION['user'] = $name;
-        if (isset($_SESSION['user'])){
+        if (isset($_SESSION['user'])){   
             header("Location:homepage.php");
+            if(!empty($_POST['remember'])){
+                setcookie("user", $_POST['user'], time()+ (10 * 365 * 24 * 60 * 60));    
+                setcookie("password", $_POST['password'], time()+ (10 * 365 * 24 * 60 * 60));    
+            } else {
+                if (isset($_COOKIE['user'])){
+                    setcookie("user", "");
+                }
+                if (isset($_COOKIE['password'])){
+                    setcookie("password", "");
+                }
+            }
             exit();
         } else {
             header("Location:login.php");

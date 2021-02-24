@@ -13,9 +13,23 @@
         <div class="log">
             <form action="verify_login.php" method="POST">
             <img class="warungin" src="img/WarungIn.png" alt="">
-            <input class="inputLog" type="text" name="user" placeholder="Username">
-            <input class="inputLog" type="password" name="password" placeholder="Password">
-            <input class="checkbox" type="checkbox" name="remember">
+            <input class="inputLog" type="text" name="user" placeholder="Username"
+            value="<?php 
+                if (isset($_COOKIE['user'])){
+                    echo $_COOKIE['user'];
+                }
+            ?>"
+            >
+            <input class="inputLog" type="password" name="password" placeholder="Password"
+            value="<?php 
+                if (isset($_COOKIE['password'])){
+                    echo $_COOKIE['password'];
+                }
+            ?>"
+            >
+            <input class="checkbox" type="checkbox" name="remember" 
+            <?php if (isset($_COOKIE['user'])): ?> checked <?php endif ?>
+            >
             Remember Me
             <button class="btn" type="submit" name="save">Login</button>
             <div class="strip"></div>
