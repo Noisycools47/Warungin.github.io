@@ -1,3 +1,50 @@
+
+<?php 
+
+session_start();
+$koneksi = mysqli_connect('localhost', 'root', '', 'warungin');
+
+if (isset($_POST['add_to_cart'])){
+    if (isset($_SESSION['daftar_belanja'])){
+        $barang_array_id = array_column($_SESSION['daftar_belanja'], "item_id");
+        if (!in_array($_GET['id'], $barang_array_id)){
+            $count = count($_SESSION['daftar_belanja']);
+            $barang_array = array (
+                'item_id'     => $_GET['id'],
+                'nama_barang'   => $_POST['hidden_name'],
+                'harga_barang'  => $_POST['hidden_price'],
+                'jumlah_barang' => $_POST['jumlah']
+            );
+            $_SESSION['daftar_belanja'][$count] = $barang_array;
+        } else {
+            echo '<script>alert("Barang Sudah Ada Di Daftar Belanja!")</script>';
+            echo '<script>window.location="index.php"</script>';
+        }
+    } else {
+        $barang_array = array (
+            'item_id'     => $_GET['id'],
+            'nama_barang'   => $_POST['hidden_name'],
+            'harga_barang'  => $_POST['hidden_price'],
+            'jumlah_barang' => $_POST['jumlah']
+        );
+        $_SESSION['daftar_belanja'][0] = $barang_array;
+    }
+}
+
+if (isset($_GET['action'])){
+    if ($_GET['action'] == "delete"){
+        foreach ($_SESSION['daftar_belanja'] as $keys => $values){
+            if ($values["item_id"] == $_GET['id']){
+                unset($_SESSION['daftar_belanja'][$keys]);
+                echo '<script>alert("Barang Dihapus dari Daftar Belanja!")</script>';
+                echo '<script>window.location="index.php"</script>';
+            }
+        }
+    }
+}
+
+ ?>
+
 <!DOCTYPE html>
 <html lang="ind">
 <head>
@@ -55,13 +102,66 @@
         <div class="product">
             <div class="prod">
                 <h1>Best Seller</h1>
+                <table border="1">
+                <tr>
+                    <th>Nama Barang</th>
+                    <th>Jumlah</th>
+                    <th>Harga</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+                <?php 
+                if (!empty($_SESSION['daftar_belanja'])){
+                    $total = 0;
+                    foreach($_SESSION['daftar_belanja'] as $keys => $values){
+                ?>
+                <tr>
+                    <td><?php echo $values['nama_barang']; ?></td>
+                    <td><?php echo $values['jumlah_barang']; ?></td>
+                    <td><?php echo $values['harga_barang']; ?></td>
+                    <td><?php echo number_format($values["jumlah_barang"] * $values['harga_barang'], 2); ?></td>
+                    <td><a href="index.php?action=delete&id=<?php echo $values['item_id']; ?>">Hapus</a></td>
+                </tr>
+                <?php
+                    $total += ($values["jumlah_barang"] * $values['harga_barang']);
+                ?>
+                <tr>
+                    <td>Total</td>
+                    <td>Rp. <?php echo number_format($total, 2); ?></td>
+                    <td></td>
+                </tr>
+                <?php
+                    }
+                }
+                ?>
+            </table>
                 <span>Lihat Semua</span>
                 <div class="slider"><img src="img/slider.png" alt=""></div>
                 <div class="items">
-                    <div class="item"><img src="img/images (31).jpeg" alt=""><p>Indomie Goreng</p><span>Warung Mang Sholeh <br>Jl. Kebon Jeruk</span></div>
-                    <div class="item"><img src="img/images (31).jpeg" alt=""><p>Indomie Goreng</p><span>Warung Mang Sholeh <br>Jl. Kebon Jeruk</span></div>
-                    <div class="item"><img src="img/images (31).jpeg" alt=""><p>Indomie Goreng</p><span>Warung Mang Sholeh <br>Jl. Kebon Jeruk</span></div>
-                    <div class="item"><img src="img/images (31).jpeg" alt=""><p>Indomie Goreng</p><span>Warung Mang Sholeh <br>Jl. Kebon Jeruk</span></div>
+                    <?php 
+
+                    $sql = "SELECT * FROM tabel_barang ORDER BY barang_id ASC";
+                    $result = mysqli_query($koneksi, $sql);
+
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_array($result)){
+                    ?>
+                            <form method="post" action="index.php?action=add&id=<?php echo $row['barang_id']; ?>">
+                                <div id="item" class="item"><img src="<?php echo $row['foto_barang']; ?>" >
+                                    <p><?php echo $row['nama_barang']; ?></p>
+                                    <span>
+                                        <?php echo $row['pemilik_barang']; ?> <br>
+                                        Rp. <?php echo $row['harga_barang'].' /'.$row['satuan_barang']; ?> <br>
+                                        Jl. Kebon Jeruk
+                                    </span>
+                                    <input type="text" name="jumlah" value="1">
+                                    <input type="submit" name="add_to_cart" value="Tambahkan Ke Daftar Belanja">
+                                    <input type="hidden" name="hidden_name" value="<?php echo $row['nama_barang']; ?>">
+                                    <input type="hidden" name="hidden_price" value="<?php echo $row['harga_barang']; ?>">
+                                </div>
+                            </form>
+                        <?php } ?>
+                    <?php } ?>
                 </div>
             </div>
         </div>

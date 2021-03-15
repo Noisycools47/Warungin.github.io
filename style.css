@@ -307,6 +307,7 @@ body {
 
 .prod {
     width: 80%;
+    height: 200%;
     margin: auto;
     position: relative;
     padding-top: 20px;
