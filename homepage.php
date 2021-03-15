@@ -53,7 +53,7 @@ if (isset($_GET['action'])){
     }
 }
 
- ?>
+?>
 
 <!DOCTYPE html>
 <html lang="ind">
@@ -113,6 +113,8 @@ if (isset($_GET['action'])){
         <div class="product">
             <div class="prod">
                 <h1>Best Seller</h1>
+
+                <!-- IMPOSTOR -->
                 <table border="1">
                 <tr>
                     <th>Nama Barang</th>
@@ -155,9 +157,10 @@ if (isset($_GET['action'])){
                 }
                 ?>
                 </table>
-                <form action="index.php?action=cek" method="post">
+                <form action="daftar_belanja.php?action=cek" method="post">
                     <input style="color: black;" type="submit" name="cek_total" value="Cek Total">
                 </form>
+                <!-- IMPOSTOR -->
                 <span>Lihat Semua</span>
                 <div class="slider"><img src="img/slider.png" alt=""></div>
                 <div class="items">
@@ -169,7 +172,7 @@ if (isset($_GET['action'])){
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_array($result)){
                     ?>
-                            <form method="post" action="index.php?action=add&id=<?php echo $row['barang_id']; ?>">
+                            <form method="post" action="daftar_belanja.php?action=add&id=<?php echo $row['barang_id']; ?>">
                                 <div id="item" class="item"><img src="<?php echo $row['foto_barang']; ?>" >
                                     <p><?php echo $row['nama_barang']; ?></p>
                                     <span>
