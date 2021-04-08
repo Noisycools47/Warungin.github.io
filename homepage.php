@@ -15,39 +15,72 @@ if (!isset($_SESSION['user'])){
 $koneksi = mysqli_connect('localhost', 'root', '', 'warungin');
 
 if (isset($_POST['add_to_cart'])){
-    if (isset($_SESSION['daftar_belanja'])){
-        $barang_array_id = array_column($_SESSION['daftar_belanja'], "item_id");
-        if (!in_array($_GET['id'], $barang_array_id)){
-            $count = count($_SESSION['daftar_belanja']);
-            $barang_array = array (
-                'item_id'     => $_GET['id'],
-                'nama_barang'   => $_POST['hidden_name'],
-                'harga_barang'  => $_POST['hidden_price'],
-                'jumlah_barang' => $_POST['jumlah']
-            );
-            $_SESSION['daftar_belanja'][$count] = $barang_array;
-        } else {
-            echo '<script>alert("Barang Sudah Ada Di Daftar Belanja!")</script>';
-            echo '<script>window.location="index.php"</script>';
-        }
-    } else {
-        $barang_array = array (
-            'item_id'     => $_GET['id'],
-            'nama_barang'   => $_POST['hidden_name'],
-            'harga_barang'  => $_POST['hidden_price'],
-            'jumlah_barang' => $_POST['jumlah']
-        );
-        $_SESSION['daftar_belanja'][0] = $barang_array;
+    // if (isset($_SESSION['daftar_belanja'])){
+    //     $barang_array_id = array_column($_SESSION['daftar_belanja'], "item_id");
+    //     if (!in_array($_GET['id'], $barang_array_id)){
+    //         $count = count($_SESSION['daftar_belanja']);
+    //         $barang_array = array (
+    //             'item_id'     => $_GET['id'],
+    //             'nama_barang'   => $_POST['hidden_name'],
+    //             'harga_barang'  => $_POST['hidden_price'],
+    //             'jumlah_barang' => $_POST['jumlah']
+    //         );
+    //         $_SESSION['daftar_belanja'][$count] = $barang_array;
+    //     } else {
+    //         echo '<script>alert("Barang Sudah Ada Di Daftar Belanja!")</script>';
+    //         echo '<script>window.location="index.php"</script>';
+    //     }
+    // } else {
+    //     $barang_array = array (
+    //         'item_id'     => $_GET['id'],
+    //         'nama_barang'   => $_POST['hidden_name'],
+    //         'harga_barang'  => $_POST['hidden_price'],
+    //         'jumlah_barang' => $_POST['jumlah']
+    //     );
+    //     $_SESSION['daftar_belanja'][0] = $barang_array;
+    // }
+    function validate($data){
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
+    
+    $_SESSION["nama_barang"] = $_POST['hidden_name'];
+    $_SESSION["harga_barang"] = $_POST['hidden_price'];
 }
 
 if (isset($_GET['action'])){
-    if ($_GET['action'] == "delete"){
-        foreach ($_SESSION['daftar_belanja'] as $keys => $values){
-            if ($values["item_id"] == $_GET['id']){
-                unset($_SESSION['daftar_belanja'][$keys]);
-                echo '<script>alert("Barang Dihapus dari Daftar Belanja!")</script>';
-                echo '<script>window.location="index.php"</script>';
+    if ($_GET['action'] == "add"){
+        function validate($data){
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+        }
+
+        $qty = validate($_POST["jumlah"]);
+        $nama_barang = validate($_POST["hidden_name"]);
+        $harga_barang = validate($_POST["hidden_price"]);
+        
+        $cekQuantity = "SELECT * FROM daftar_belanja WHERE nama_barang='$nama_barang'";
+        $result1 = mysqli_query($koneksi, $cekQuantity);
+
+        if (mysqli_num_rows($result1) > 0){
+            echo "<script>alert('Barang sudah tersedia di Daftar Belanja!');</script>";
+            header("Location: homepage.php?error=Barang sudah tersedia di Daftar Belanja!");
+            exit();
+        } else {
+            $addQuantity = "INSERT INTO daftar_belanja(qty, nama_barang, harga_barang) VALUES('$qty', '$nama_barang', '$harga_barang')";
+            $result2 = mysqli_query($koneksi, $addQuantity);
+            if ($result2) {
+                echo "<script>alert('Barang berhasil ditambahkan!')</script>";
+                header("Location: homepage.php?succes=Barang berhasil ditambahkan!");
+                exit();
+            } else {
+                echo "<script>alert('Ada error yang terjadi!')</script>";
+                header("Location: homepage.php?error=Ada error yang terjadi!");
+                exit();
             }
         }
     }
@@ -172,7 +205,7 @@ if (isset($_GET['action'])){
                     if (mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_array($result)){
                     ?>
-                            <form method="post" action="daftar_belanja.php?action=add&id=<?php echo $row['barang_id']; ?>">
+                            <form method="post" action="homepage.php?action=add&id=<?php echo $row['barang_id']; ?>">
                                 <div id="item" class="item"><img src="<?php echo $row['foto_barang']; ?>" >
                                     <p><?php echo $row['nama_barang']; ?></p>
                                     <span>
