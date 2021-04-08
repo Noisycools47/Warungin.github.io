@@ -1,20 +1,19 @@
-
 <!-- ==================== -->
-<?php 
+<?php
 
 session_start();
-if (!isset($_SESSION['user'])){
+if (!isset($_SESSION['user'])) {
     header("Location: login.php");
 }
 
 ?>
 <!-- ==================== -->
 
-<?php 
+<?php
 
 $koneksi = mysqli_connect('localhost', 'root', '', 'warungin');
 
-if (isset($_POST['add_to_cart'])){
+if (isset($_POST['add_to_cart'])) {
     // if (isset($_SESSION['daftar_belanja'])){
     //     $barang_array_id = array_column($_SESSION['daftar_belanja'], "item_id");
     //     if (!in_array($_GET['id'], $barang_array_id)){
@@ -39,20 +38,15 @@ if (isset($_POST['add_to_cart'])){
     //     );
     //     $_SESSION['daftar_belanja'][0] = $barang_array;
     // }
-    function validate($data){
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-    
+
     $_SESSION["nama_barang"] = $_POST['hidden_name'];
     $_SESSION["harga_barang"] = $_POST['hidden_price'];
 }
 
-if (isset($_GET['action'])){
-    if ($_GET['action'] == "add"){
-        function validate($data){
+if (isset($_GET['action'])) {
+    if ($_GET['action'] == "add") {
+        function validate($data)
+        {
             $data = trim($data);
             $data = stripslashes($data);
             $data = htmlspecialchars($data);
@@ -62,11 +56,11 @@ if (isset($_GET['action'])){
         $qty = validate($_POST["jumlah"]);
         $nama_barang = validate($_POST["hidden_name"]);
         $harga_barang = validate($_POST["hidden_price"]);
-        
+
         $cekQuantity = "SELECT * FROM daftar_belanja WHERE nama_barang='$nama_barang'";
         $result1 = mysqli_query($koneksi, $cekQuantity);
 
-        if (mysqli_num_rows($result1) > 0){
+        if (mysqli_num_rows($result1) > 0) {
             echo "<script>alert('Barang sudah tersedia di Daftar Belanja!');</script>";
             header("Location: homepage.php?error=Barang sudah tersedia di Daftar Belanja!");
             exit();
@@ -90,6 +84,7 @@ if (isset($_GET['action'])){
 
 <!DOCTYPE html>
 <html lang="ind">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -97,6 +92,7 @@ if (isset($_GET['action'])){
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="responsive.css">
 </head>
+
 <body>
 
     <!-- Awal Navbar -->
@@ -109,8 +105,8 @@ if (isset($_GET['action'])){
             <li>WarungKu</li>
         </ul>
         <div class="user">
-           <!-- ==================== -->
-           <span><a class="a" href="logout.php">Logout</a></span>
+            <!-- ==================== -->
+            <span><a class="a" href="logout.php">Logout</a></span>
             <!-- ==================== -->
         </div>
         <span class="check">
@@ -118,7 +114,7 @@ if (isset($_GET['action'])){
         </span>
     </div>
     <!-- Akhir Navbar -->
-    
+
     <div class="container">
         <div class="jumbotron" id="home">
             <div class="jumboText">
@@ -149,46 +145,46 @@ if (isset($_GET['action'])){
 
                 <!-- IMPOSTOR -->
                 <table border="1">
-                <tr>
-                    <th>Nama Barang</th>
-                    <th>Jumlah</th>
-                    <th>Harga</th>
-                    <th>Total</th>
-                    <th></th>
-                </tr>
-                <?php 
-                if (!empty($_SESSION['daftar_belanja'])){
-                    $total = 0;
-                    foreach($_SESSION['daftar_belanja'] as $keys => $values){
-                ?>
-                <tr>
-                    <td><?php echo $values['nama_barang']; ?></td>
-                    <td><?php echo $values['jumlah_barang']; ?></td>
-                    <td><?php echo $values['harga_barang']; ?></td>
-                    <td><?php echo number_format($values["jumlah_barang"] * $values['harga_barang'], 2); ?></td>
-                    <td><a href="index.php?action=delete&id=<?php echo $values['item_id']; ?>">Hapus</a></td>
-                </tr>
-                <?php
-                    $total += ($values["jumlah_barang"] * $values['harga_barang']);
-                ?>
-                <?php
-                    } ?>
-                <?php 
-                if (isset($_GET['action'])){
-                    if ($_GET['action'] == "cek"){
+                    <tr>
+                        <th>Nama Barang</th>
+                        <th>Jumlah</th>
+                        <th>Harga</th>
+                        <th>Total</th>
+                        <th></th>
+                    </tr>
+                    <?php
+                    if (!empty($_SESSION['daftar_belanja'])) {
+                        $total = 0;
+                        foreach ($_SESSION['daftar_belanja'] as $keys => $values) {
                     ?>
-                        <tr>
-                        <td>Total</td>
-                        <td colspan="3">Rp. <?php echo number_format($total, 2); ?></td>
-                        <td></td>
-                        </tr>
+                            <tr>
+                                <td><?php echo $values['nama_barang']; ?></td>
+                                <td><?php echo $values['jumlah_barang']; ?></td>
+                                <td><?php echo $values['harga_barang']; ?></td>
+                                <td><?php echo number_format($values["jumlah_barang"] * $values['harga_barang'], 2); ?></td>
+                                <td><a href="index.php?action=delete&id=<?php echo $values['item_id']; ?>">Hapus</a></td>
+                            </tr>
+                            <?php
+                            $total += ($values["jumlah_barang"] * $values['harga_barang']);
+                            ?>
+                        <?php
+                        } ?>
+                        <?php
+                        if (isset($_GET['action'])) {
+                            if ($_GET['action'] == "cek") {
+                        ?>
+                                <tr>
+                                    <td>Total</td>
+                                    <td colspan="3">Rp. <?php echo number_format($total, 2); ?></td>
+                                    <td></td>
+                                </tr>
+                        <?php
+                            }
+                        }
+                        ?>
                     <?php
                     }
-                }
-                ?>
-                <?php
-                }
-                ?>
+                    ?>
                 </table>
                 <form action="daftar_belanja.php?action=cek" method="post">
                     <input style="color: black;" type="submit" name="cek_total" value="Cek Total">
@@ -197,20 +193,20 @@ if (isset($_GET['action'])){
                 <span>Lihat Semua</span>
                 <div class="slider"><img src="img/slider.png" alt=""></div>
                 <div class="items">
-                    <?php 
+                    <?php
 
                     $sql = "SELECT * FROM tabel_barang ORDER BY barang_id ASC";
                     $result = mysqli_query($koneksi, $sql);
 
                     if (mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_array($result)){
+                        while ($row = mysqli_fetch_array($result)) {
                     ?>
                             <form method="post" action="homepage.php?action=add&id=<?php echo $row['barang_id']; ?>">
-                                <div id="item" class="item"><img src="<?php echo $row['foto_barang']; ?>" >
+                                <div id="item" class="item"><img src="<?php echo $row['foto_barang']; ?>">
                                     <p><?php echo $row['nama_barang']; ?></p>
                                     <span>
                                         <?php echo $row['pemilik_barang']; ?> <br>
-                                        Rp. <?php echo $row['harga_barang'].' /'.$row['satuan_barang']; ?> <br>
+                                        Rp. <?php echo $row['harga_barang'] . ' /' . $row['satuan_barang']; ?> <br>
                                         Jl. Kebon Jeruk
                                     </span>
                                     <input type="text" name="jumlah" value="1">
@@ -237,4 +233,5 @@ if (isset($_GET['action'])){
 
     <script src="script.js"></script>
 </body>
+
 </html>
